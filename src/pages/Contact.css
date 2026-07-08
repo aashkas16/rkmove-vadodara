@@ -1,0 +1,196 @@
+.contact-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.contact-split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Info Column */
+.contact-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.contact-details-card h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.branch-label {
+  font-size: 0.88rem;
+  color: var(--secondary);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+}
+
+.info-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.info-item-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.info-icon {
+  color: var(--secondary);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.info-item-row h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.info-item-row p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.info-item-row a:hover {
+  color: var(--secondary);
+}
+
+/* Map Dummy */
+.map-placeholder-card h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+
+.map-dummy-box {
+  background-color: var(--light);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.map-pin-pulse {
+  color: var(--secondary);
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+.map-dummy-box h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.map-dummy-box p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.map-link-btn {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary-light);
+  display: inline-flex;
+  align-items: center;
+}
+
+.map-link-btn:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+/* Forms Card Column */
+.contact-forms-col {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.form-container-card {
+  padding: 36px !important;
+}
+
+.form-container-card h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.form-container-card p {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.form-success-wrapper {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.form-success-wrapper .success-icon {
+  color: var(--success);
+  margin-bottom: 16px;
+}
+
+.form-success-wrapper h3 {
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.form-success-wrapper p {
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+/* Review Star Inputs */
+.rating-stars-input {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.star-input-icon {
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.star-filled {
+  color: #f59e0b;
+  fill: #f59e0b;
+  transform: scale(1.1);
+}
+
+.star-empty {
+  color: #cbd5e1;
+}
+
+.review-form-card {
+  border-top: 4px solid var(--secondary);
+}
+
+@media (max-width: 968px) {
+  .contact-split-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}

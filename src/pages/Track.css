@@ -1,0 +1,426 @@
+.track-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.track-search-card {
+  padding: 32px !important;
+  max-width: 750px;
+  margin: 0 auto 40px;
+}
+
+.track-search-form {
+  display: flex;
+  gap: 16px;
+}
+
+.track-input-field {
+  position: relative;
+  flex-grow: 1;
+}
+
+.search-field-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+}
+
+.track-search-input {
+  width: 100%;
+  padding: 16px 16px 16px 52px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  outline: none;
+  background-color: white;
+  transition: var(--transition);
+}
+
+.track-search-input:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.1);
+}
+
+.search-btn {
+  padding: 0 32px;
+  font-size: 1rem;
+}
+
+.demo-hint-text {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 14px;
+  text-align: center;
+}
+
+.track-error-box {
+  max-width: 750px;
+  margin: 0 auto 40px;
+  background-color: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  text-align: center;
+  padding: 24px !important;
+  border-radius: var(--radius-sm);
+}
+
+/* Shipment Results CSS */
+.shipment-result-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Summary Card */
+.shipment-summary-card {
+  padding: 32px !important;
+  border-left: 6px solid var(--accent-blue);
+}
+
+.summary-main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+.summary-lr {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+.summary-status-title {
+  font-size: 1.5rem;
+  color: var(--primary);
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+.status-text-booked { color: var(--muted); }
+.status-text-packing { color: #f59e0b; }
+.status-text-loading { color: #e11d48; }
+.status-text-in_transit { color: #2563eb; }
+.status-text-reached_hub { color: #8b5cf6; }
+.status-text-out_for_delivery { color: #ec4899; }
+.status-text-delivered { color: var(--success); }
+
+.summary-eta-badge {
+  background-color: var(--primary);
+  color: white;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--glass-shadow-dark);
+}
+
+.eta-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.eta-value {
+  font-size: 1.05rem;
+}
+
+.summary-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 24px;
+}
+
+.sum-detail-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.sum-icon {
+  color: var(--secondary);
+  margin-top: 3px;
+}
+
+.sum-detail-item span {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  display: block;
+  font-weight: 600;
+}
+
+.sum-detail-item strong {
+  font-size: 0.95rem;
+  color: var(--dark);
+}
+
+/* Horizontal Milestones Stepper */
+.shipment-stepper-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 24px;
+}
+
+.stepper-track-wrapper {
+  overflow-x: auto;
+  padding: 20px 10px;
+}
+
+.stepper-track {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  min-width: 650px;
+}
+
+.stepper-track::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--border);
+  z-index: 1;
+}
+
+.step-node-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+  flex: 1;
+}
+
+.step-node {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: white;
+  border: 4px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.step-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--muted);
+  border-radius: 50%;
+}
+
+.step-node-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Completed Steps styling */
+.step-node-container.completed .step-node {
+  border-color: var(--success);
+  background-color: var(--success);
+}
+
+.step-node-container.completed .step-node-label {
+  color: var(--success);
+  font-weight: 700;
+}
+
+.step-check {
+  color: white;
+}
+
+/* Active Step styling */
+.step-node-container.active .step-node {
+  border-color: var(--accent-blue);
+  background-color: white;
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+}
+
+.step-node-container.active .step-dot {
+  background-color: var(--accent-blue);
+  width: 10px;
+  height: 10px;
+}
+
+.step-node-container.active .step-node-label {
+  color: var(--accent-blue);
+  font-weight: 700;
+}
+
+/* Document Upload Preview Styles */
+.shipment-doc-preview-card {
+  padding: 32px !important;
+  border-top: 4px solid var(--accent-blue);
+}
+
+.doc-preview-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.doc-preview-icon {
+  color: var(--accent-blue);
+}
+
+.doc-preview-header h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.doc-image-frame {
+  width: 100%;
+  max-height: 420px;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  background-color: var(--dark-light);
+}
+
+.doc-preview-img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Vertical History Logs */
+.shipment-history-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 28px;
+}
+
+.history-timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.history-log-item {
+  display: flex;
+  gap: 24px;
+  position: relative;
+}
+
+.log-marker-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.log-marker-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.log-marker-line {
+  width: 2px;
+  background-color: var(--border);
+  flex-grow: 1;
+  z-index: 1;
+  min-height: 50px;
+}
+
+.history-log-item:last-child .log-marker-line {
+  display: none;
+}
+
+.log-content {
+  flex-grow: 1;
+  padding-bottom: 24px;
+}
+
+.log-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.log-status-badge {
+  background-color: #f1f5f9;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.log-time {
+  font-size: 0.75rem;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.log-location {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-light);
+  margin-bottom: 4px;
+}
+
+.log-comment {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .track-search-form {
+    flex-direction: column;
+  }
+  .search-btn {
+    width: 100%;
+    padding: 14px 0;
+  }
+  .summary-main-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .summary-eta-badge {
+    width: 100%;
+    justify-content: center;
+  }
+}

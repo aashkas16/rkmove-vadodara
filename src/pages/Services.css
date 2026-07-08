@@ -1,0 +1,181 @@
+.services-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.services-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 36px;
+  margin-bottom: 80px;
+}
+
+.services-full-card {
+  display: flex;
+  flex-direction: column;
+  padding: 36px !important;
+}
+
+.service-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.service-card-emoji {
+  font-size: 2.2rem;
+}
+
+.service-card-header h3 {
+  font-size: 1.35rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.service-card-desc {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+
+.service-bullets-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.service-bullets-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--dark-light);
+  line-height: 1.4;
+}
+
+.bullet-check-icon {
+  color: var(--secondary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Packaging Materials */
+.packing-materials-section {
+  margin-bottom: 80px;
+  background-color: var(--light);
+  border-radius: var(--radius-md);
+  padding: 60px 40px;
+  border: 1px solid var(--border);
+}
+
+.materials-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.materials-header h2 {
+  font-size: 1.8rem;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.materials-header p {
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.materials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+}
+
+.material-card {
+  text-align: center;
+  padding: 32px 24px !important;
+  background-color: white;
+  transition: var(--transition);
+}
+
+.material-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--secondary);
+}
+
+.mat-icon {
+  color: var(--secondary);
+  margin-bottom: 16px;
+}
+
+.material-card h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--primary);
+}
+
+.material-card p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* CTA Box */
+.services-cta-box {
+  text-align: center;
+  padding: 48px !important;
+  background: var(--dark) !important;
+  color: white;
+  border: none;
+}
+
+.services-cta-box h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.services-cta-box p {
+  color: #cbd5e1;
+  max-width: 600px;
+  margin: 0 auto 28px;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.services-cta-box .btn-outline {
+  border-color: white;
+  color: white;
+}
+
+.services-cta-box .btn-outline:hover {
+  background-color: white;
+  color: var(--dark);
+}
+
+@media (max-width: 768px) {
+  .services-list-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .packing-materials-section {
+    padding: 36px 20px;
+  }
+  .cta-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cta-buttons a {
+    width: 100%;
+  }
+}

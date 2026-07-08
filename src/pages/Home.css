@@ -1,0 +1,429 @@
+/* Centered High-Branding Hero - Replicating rkmove.com exactly */
+.rk-exact-hero {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  padding: 140px 0 160px 0;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-exact-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 800px;
+  text-align: left;
+}
+
+/* Tag Capsule */
+.exact-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(234, 88, 12, 0.15);
+  border: 1.5px solid rgba(234, 88, 12, 0.35);
+  color: #ffa066;
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 28px;
+}
+
+.exact-pill-icon {
+  color: #ffa066;
+}
+
+/* Titles */
+.exact-hero-title {
+  font-size: 4.2rem;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  margin-bottom: 24px;
+}
+
+.exact-hero-title span {
+  color: var(--secondary); /* Vibrant Orange */
+}
+
+/* Subtext */
+.exact-hero-desc {
+  font-size: 1.1rem;
+  color: #e2e8f0;
+  line-height: 1.6;
+  max-width: 650px;
+  margin-bottom: 36px;
+}
+
+/* Bullet Badges Row */
+.exact-hero-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 48px;
+}
+
+.badge-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.badge-icon-check {
+  color: var(--secondary); /* Orange ticks */
+}
+
+/* Button row side-by-side */
+.exact-hero-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.exact-hero-actions-row .btn {
+  padding: 14px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.btn-exact-track {
+  background-color: var(--secondary);
+  color: white;
+  box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
+}
+
+.btn-exact-track:hover {
+  background-color: var(--secondary-hover);
+  transform: translateY(-2px);
+}
+
+.btn-exact-quote {
+  background-color: #ffffff;
+  color: var(--primary);
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-exact-quote:hover {
+  background-color: #f1f5f9;
+  transform: translateY(-2px);
+}
+
+.btn-exact-call {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  color: white;
+  backdrop-filter: blur(8px);
+  transition: var(--transition);
+}
+
+.btn-exact-call:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Services morphic grid */
+.services-morphic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+}
+
+.services-morphic-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px 32px !important;
+  background-color: white !important;
+  border-color: rgba(148, 163, 184, 0.1) !important;
+}
+
+.service-morphic-badge {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  background-color: var(--light);
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.service-morphic-icon {
+  font-size: 2.8rem;
+  margin-bottom: 24px;
+}
+
+.services-morphic-card h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.services-morphic-card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 28px;
+  flex-grow: 1;
+}
+
+.service-morphic-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--secondary);
+}
+
+.service-morphic-link:hover {
+  gap: 10px;
+  color: var(--secondary-hover);
+}
+
+/* Why choose us features */
+.why-choose-us-morphic {
+  background-color: var(--light);
+}
+
+.features-morphic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 32px;
+}
+
+.feature-morphic-card {
+  padding: 32px !important;
+  background-color: white !important;
+}
+
+.feature-morphic-icon-wrapper {
+  color: var(--secondary);
+  margin-bottom: 20px;
+}
+
+.feature-morphic-card h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.feature-morphic-card p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Horizontal Timeline Steps */
+.steps-morphic-timeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.step-morphic-node {
+  background-color: white;
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  border: 1px solid var(--border);
+  box-shadow: var(--glass-shadow);
+  transition: var(--transition);
+}
+
+.step-morphic-node:hover {
+  transform: translateY(-4px);
+  border-color: var(--secondary);
+}
+
+.step-morphic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.step-morphic-number {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: rgba(10, 17, 40, 0.1);
+}
+
+.step-morphic-node:hover .step-morphic-number {
+  color: var(--secondary);
+}
+
+.step-node-check {
+  color: var(--success);
+}
+
+.step-morphic-node h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.step-morphic-node p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* Testimonials / Reviews feedbacks */
+.testimonials-morphic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.testimonial-morphic-card {
+  padding: 32px !important;
+  background-color: white !important;
+  border-color: rgba(148, 163, 184, 0.1) !important;
+}
+
+.testimonial-rating-stars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.star-morphic-filled { color: #f59e0b; fill: #f59e0b; }
+.star-morphic-empty { color: #cbd5e1; }
+
+.testimonial-morphic-comment {
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--dark-light);
+  margin-bottom: 24px;
+}
+
+.testimonial-morphic-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-avatar-initial {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--primary-light);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.testimonial-morphic-user h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.testimonial-morphic-user span {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.testimonials-morphic-action {
+  display: flex;
+  justify-content: center;
+}
+
+/* Accordion FAQs */
+.faq-morphic-list {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.faq-morphic-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background-color: white;
+  cursor: pointer;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.faq-morphic-item:hover {
+  border-color: var(--secondary);
+}
+
+.faq-morphic-question {
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+
+.faq-morphic-answer {
+  padding: 0 24px 24px 24px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+  padding-top: 16px;
+}
+
+@media (max-width: 968px) {
+  .rk-exact-hero {
+    padding: 100px 0 100px 0;
+  }
+  .exact-hero-title {
+    font-size: 3.2rem;
+  }
+  .exact-hero-actions-row {
+    flex-direction: column;
+    width: 100%;
+    align-items: stretch;
+  }
+  .exact-hero-actions-row .btn,
+  .exact-hero-actions-row a {
+    width: 100%;
+  }
+  .steps-morphic-timeline {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

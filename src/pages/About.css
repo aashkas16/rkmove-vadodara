@@ -1,0 +1,175 @@
+.about-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.about-intro-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-bottom: 80px;
+}
+
+.about-intro-text h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.about-intro-text p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+.about-check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--dark-light);
+}
+
+.about-check-icon {
+  color: var(--success);
+}
+
+/* Stats Grid on Right */
+.about-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.about-stat-card {
+  text-align: center;
+  padding: 36px 20px !important;
+}
+
+.about-stat-card h3 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--secondary);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.about-stat-card p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Core Pillars Values */
+.about-values-section {
+  margin-bottom: 80px;
+}
+
+.values-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.values-header h2 {
+  font-size: 1.8rem;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.values-header p {
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+}
+
+.value-card {
+  text-align: center;
+  padding: 40px 24px !important;
+}
+
+.value-icon {
+  color: var(--primary-light);
+  margin-bottom: 20px;
+}
+
+.value-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.value-card p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* IBA Certification Box */
+.iba-certification-box {
+  display: flex;
+  gap: 24px;
+  padding: 36px !important;
+  border-left: 6px solid var(--secondary);
+  background-color: white;
+}
+
+.iba-badge-icon {
+  background-color: rgba(249, 115, 22, 0.1);
+  color: var(--secondary);
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.iba-certification-box h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.iba-certification-box p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .about-intro-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .about-stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .iba-certification-box {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+}
