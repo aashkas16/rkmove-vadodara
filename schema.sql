@@ -75,3 +75,22 @@ CREATE POLICY "Enable all actions for authenticated users" ON public.shipments F
 CREATE POLICY "Enable read for approved reviews" ON public.reviews FOR SELECT USING (is_approved = true);
 CREATE POLICY "Enable insert for all reviews" ON public.reviews FOR INSERT WITH CHECK (true);
 CREATE POLICY "Enable admin modifications on reviews" ON public.reviews FOR ALL TO authenticated USING (true);
+
+-- 7. Create Contacts Table (Customer inquiries query log)
+CREATE TABLE IF NOT EXISTS public.contacts (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    name TEXT NOT NULL,
+    email TEXT,
+    phone TEXT NOT NULL,
+    subject TEXT NOT NULL,
+    message TEXT NOT NULL
+);
+
+-- Enable RLS for Contacts
+ALTER TABLE public.contacts ENABLE ROW LEVEL SECURITY;
+
+-- Policies for Contacts Table
+CREATE POLICY "Enable insert for everyone on contacts" ON public.contacts FOR INSERT WITH CHECK (true);
+CREATE POLICY "Enable read for authenticated users on contacts" ON public.contacts FOR SELECT TO authenticated USING (true);
+CREATE POLICY "Enable all modifications for admin on contacts" ON public.contacts FOR ALL TO authenticated USING (true);

@@ -149,10 +149,12 @@ export default function Admin() {
       const allQuotes = await dbService.getQuotes();
       const allShipments = await dbService.getAllShipments();
       const allReviews = await dbService.getAllReviews();
+      const allContacts = await dbService.getContacts();
 
       setQuotes(allQuotes || []);
       setShipments(allShipments || []);
       setReviews(allReviews || []);
+      setContacts(allContacts || []);
 
       if (allQuotes && allQuotes.length > 0 && !selectedAIQuote) {
         setSelectedAIQuote(allQuotes[0]);
@@ -1907,7 +1909,7 @@ export default function Admin() {
                       </td>
                       <td>{c.subject}</td>
                       <td style={{ maxWidth: '300px', whiteSpace: 'normal' }}>"{c.message}"</td>
-                      <td>{c.date}</td>
+                      <td>{c.date || (c.created_at ? new Date(c.created_at).toLocaleDateString('en-US') : 'N/A')}</td>
                     </tr>
                   ))}
                 </tbody>

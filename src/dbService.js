@@ -456,5 +456,57 @@ export const dbService = {
       }
       throw new Error('Review not found');
     }
+  },
+
+  // === CONTACTS / INQUIRIES ===
+  async submitContact(contactData) {
+    if (isSupabaseConfigured()) {
+      const { data, error } = await supabase
+        .from('contacts')
+        .insert([{
+          name: contactData.name,
+          email: contactData.email,
+          phone: contactData.phone,
+          subject: contactData.subject,
+          message: contactData.message
+        }])
+        .select();
+      if (error) throw error;
+      return data[0];
+    } else {
+      const contacts = JSON.parse(localStorage.getItem('rk_contacts') || '[]');
+      const newContact = {
+        id: 'contact-' + Date.now(),
+        created_at: new Date().toISOString(),
+        name: contactData.name,
+        email: contactData.email,
+        phone: contactData.phone,
+        subject: contactData.subject,
+        message: contactData.message
+      };
+      contacts.unshift(newContact);
+      localStorage.setItem('rk_contacts', JSON.stringify(contacts));
+      return newContact;
+    }
+  },
+
+  async getContacts() {
+    if (isSupabaseConfigured()) {
+      const { data, error } = await supabase
+        .from('contacts')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      return data;
+    } else {
+      const initialContacts = [
+        { id: 'c-1', name: 'Aashka Shah', email: 'aashka@gmail.com', phone: '9876543211', subject: 'Quote Enquiry', message: 'Need shifting from Vadodara to Ahmedabad next week. Call me.', created_at: new Date('2026-07-02').toISOString() },
+        { id: 'c-2', name: 'Mehul Mehta', email: 'mehul@outlook.com', phone: '9822334455', subject: 'Corporate Shifting', message: 'Moving 20 workstations from Alkapuri to Gotri. Need IBA approved quotation.', created_at: new Date('2026-07-05').toISOString() }
+      ];
+      if (!localStorage.getItem('rk_contacts')) {
+        localStorage.setItem('rk_contacts', JSON.stringify(initialContacts));
+      }
+      return JSON.parse(localStorage.getItem('rk_contacts'));
+    }
   }
 };

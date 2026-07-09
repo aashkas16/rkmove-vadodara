@@ -19,11 +19,21 @@ export default function Contact() {
     setInquiryData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleInquirySubmit = (e) => {
+  const handleInquirySubmit = async (e) => {
     e.preventDefault();
-    // Simulate inquiry email submission
-    setInquirySubmitted(true);
-    setInquiryData({ name: '', email: '', phone: '', subject: '', message: '' });
+    if (!inquiryData.name.trim() || !inquiryData.phone.trim() || !inquiryData.subject.trim() || !inquiryData.message.trim()) {
+      alert('Please fill out all required fields.');
+      return;
+    }
+
+    try {
+      await dbService.submitContact(inquiryData);
+      setInquirySubmitted(true);
+      setInquiryData({ name: '', email: '', phone: '', subject: '', message: '' });
+    } catch (err) {
+      console.error(err);
+      alert('Error submitting inquiry. Please try again.');
+    }
   };
 
   const handleReviewChange = (e) => {
