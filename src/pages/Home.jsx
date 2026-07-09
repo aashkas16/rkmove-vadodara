@@ -32,6 +32,8 @@ export default function Home() {
   const [activeFaq, setActiveFaq] = useState(null);
 
   useEffect(() => {
+    document.title = "RK Cargo Packers & Movers Vadodara | Shifting Relocation Services";
+    
     // Load approved reviews
     const fetchReviews = async () => {
       try {
@@ -57,17 +59,19 @@ export default function Home() {
   ];
 
   const features = [
-    { icon: <ShieldCheck size={24} />, title: 'Premium Packing', desc: 'Multi-layer packing sheets, corners, and carton boxes protect items.' },
-    { icon: <Compass size={24} />, title: 'Live Timeline Logs', desc: 'Track lorry receipts and updates from dispatch to drop-off.' },
-    { icon: <Award size={24} />, title: 'Certified IBA Approved', desc: 'Official vendor status for bank officers and public relocations.' },
-    { icon: <Users size={24} />, title: 'In-House Handling', desc: 'Trained loaders carry goods securely via staircases and lifts.' }
+    { icon: <ShieldCheck size={24} />, title: 'Premium Packing', desc: 'Multi-layer bubble wrap, foam guards, and custom carton crates protect fragile goods.' },
+    { icon: <Compass size={24} />, title: 'Live Cargo Tracking', desc: 'Enter your Lorry Receipt (LR) code to check dispatch milestones.' },
+    { icon: <Award size={24} />, title: 'IBA Approved Vendor', desc: 'Fully licensed and certified to issue IBA bills for bank and corporate officers.' },
+    { icon: <Users size={24} />, title: 'Expert Local Crews', desc: 'Our trained in-house loaders safely carry heavy furniture via stairs and elevators.' }
   ];
 
   const faqs = [
-    { q: 'How do you calculate moving costs?', a: 'Costs are calculated based on shifting distance, volume of inventory, floor levels, elevator availability, and packing materials (Standard vs. Premium).' },
-    { q: 'What is a Lorry Receipt (LR) number?', a: 'A Lorry Receipt (LR) number is a unique tracking code assigned when cargo is loaded. Enter it on our tracking page to check transit stops and locations.' },
-    { q: 'Are my goods insured?', a: 'Yes! We provide transit insurance at 2% of declared goods value, covering unforeseen damages or road accidents during packing, loading, and transit.' },
-    { q: 'Do you dismantle and reassemble furniture?', a: 'Yes. Our loaders handle dismantling and reassembling of beds, wardrobes, dining tables, and TVs.' }
+    { q: 'How do you calculate moving costs in Vadodara?', a: 'Relocation estimates are based on shifting distance, volume of goods (1 BHK, 2 BHK, etc.), packing materials (Standard vs. Premium), floor levels, and elevator access. Use our Cost Calculator for an instant quote.' },
+    { q: 'What is a Lorry Receipt (LR) number?', a: 'A Lorry Receipt (LR) number is a unique tracking ID assigned when your cargo is loaded. Enter it on our Track page to see active highway checkpoints.' },
+    { q: 'Are my household items insured during shifting?', a: 'Yes! We provide complete transit insurance at 2% of the declared goods value, covering all risks from packing and loading to road transit and unloading.' },
+    { q: 'Do you dismantle and reassemble furniture?', a: 'Yes. Our crew handles dismantling and reassembling of beds, wardrobes, dining tables, and TVs as part of our domestic relocation services.' },
+    { q: 'Is RK Cargo Packers and Movers IBA Approved?', a: 'Yes, RK Cargo is an IBA Approved logistics vendor in Vadodara. We issue verified invoice bills, lorry receipts, and loading summaries for employee claims.' },
+    { q: 'How early should I book my relocation?', a: 'We recommend booking 3 to 7 days before your shifting date to secure your desired slot and ensure coordination, especially during weekend shifts.' }
   ];
 
   return (
@@ -132,11 +136,33 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Trust Badges & Shifting Stats Counters (V3.0) */}
+      <section className="home-stats-counter-bar">
+        <div className="container stats-counter-grid">
+          <div className="stat-counter-card card glass animate-fade">
+            <h3>15K+</h3>
+            <p>Relocations Completed</p>
+          </div>
+          <div className="stat-counter-card card glass animate-fade">
+            <h3>98.6%</h3>
+            <p>On-Time Shifting Rate</p>
+          </div>
+          <div className="stat-counter-card card glass animate-fade">
+            <h3>120+</h3>
+            <p>Fleet Carrier Vehicles</p>
+          </div>
+          <div className="stat-counter-card card glass animate-fade">
+            <h3>IBA Approved</h3>
+            <p>Authorized Cargo Partner</p>
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section className="section services-morphic-section">
         <div className="container">
-          <h2 className="section-title"><span>Our Services</span></h2>
-          <p className="section-subtitle">Certified wrapping, logistics, and warehousing customized for Vadodara families.</p>
+          <h2 className="section-title">Our <span>Shifting Services</span></h2>
+          <p className="section-subtitle">IBA approved packers and movers in Vadodara gotri branch for household shifting.</p>
           
           <div className="services-morphic-grid">
             {services.map((ser, idx) => (
@@ -158,8 +184,8 @@ export default function Home() {
       {/* Why Choose Us */}
       <section className="section why-choose-us-morphic">
         <div className="container">
-          <h2 className="section-title"><span>Why Shreya Shifting?</span></h2>
-          <p className="section-subtitle">We deliver transit insurances, IBA assurances, and damage guarantees.</p>
+          <h2 className="section-title">Why Choose <span>RK Cargo?</span></h2>
+          <p className="section-subtitle">We deliver verified transit insurance, IBA billing assurances, and zero damage shifting guarantees.</p>
           
           <div className="features-morphic-grid">
             {features.map((feat, idx) => (
@@ -198,6 +224,36 @@ export default function Home() {
                 <p>{step.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Shifting Portfolio Gallery Preview (V3.0 Dynamic) */}
+      <section className="section gallery-preview-morphic" style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="container">
+          <h2 className="section-title">Shifting <span>Showcase</span> Portfolio</h2>
+          <p className="section-subtitle">Browse photo logs of our packing, loading, and transit activities in Vadodara.</p>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginBottom: '32px' }}>
+            <div className="card" style={{ padding: 0, height: '200px', overflow: 'hidden', position: 'relative', borderRadius: '12px' }}>
+              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600" alt="Home Shifting" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', padding: '12px', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', color: 'white', fontSize: '0.8rem', fontWeight: 600 }}>Bubble wrapped furniture transit packing.</div>
+            </div>
+            <div className="card" style={{ padding: 0, height: '200px', overflow: 'hidden', position: 'relative', borderRadius: '12px' }}>
+              <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600" alt="Packaging Showcase" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', padding: '12px', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', color: 'white', fontSize: '0.8rem', fontWeight: 600 }}>Taped cardboard cargo cartons.</div>
+            </div>
+            <div className="card" style={{ padding: 0, height: '200px', overflow: 'hidden', position: 'relative', borderRadius: '12px' }}>
+              <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=600" alt="Fleet Carrier" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', padding: '12px', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', color: 'white', fontSize: '0.8rem', fontWeight: 600 }}>Closed container vehicle loading in Gotri.</div>
+            </div>
+          </div>
+          
+          <div style={{ textAlign: 'center' }}>
+            <Link to="/gallery" className="btn btn-primary">
+              <span>View Full Shifting Gallery</span>
+              <ArrowRight size={16} />
+            </Link>
           </div>
         </div>
       </section>

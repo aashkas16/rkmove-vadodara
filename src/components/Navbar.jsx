@@ -11,6 +11,7 @@ export default function Navbar() {
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about' },
     { name: 'Services', path: '/services' },
+    { name: 'Gallery', path: '/gallery' },
     { name: 'Cost Calculator', path: '/calculator' },
     { name: 'Track Parcel', path: '/track' },
     { name: 'Contact', path: '/contact' },

@@ -73,6 +73,9 @@ export default function Footer() {
               <Link to="/about"><ArrowRight size={14} /> About Our Company</Link>
             </li>
             <li>
+              <Link to="/gallery"><ArrowRight size={14} /> Shifting Showcase</Link>
+            </li>
+            <li>
               <Link to="/contact"><ArrowRight size={14} /> Contact Us</Link>
             </li>
           </ul>

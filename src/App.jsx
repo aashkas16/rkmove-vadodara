@@ -10,6 +10,7 @@ import Track from './pages/Track';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
+import Gallery from './pages/Gallery';
 
 // ScrollToTop helper component to reset scroll position on route changes
 function ScrollToTop() {
@@ -42,6 +43,7 @@ function AppContent() {
           <Route path="/track" element={<Track />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
       </main>

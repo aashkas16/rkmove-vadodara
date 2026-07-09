@@ -94,3 +94,19 @@ ALTER TABLE public.contacts ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Enable insert for everyone on contacts" ON public.contacts FOR INSERT WITH CHECK (true);
 CREATE POLICY "Enable read for authenticated users on contacts" ON public.contacts FOR SELECT TO authenticated USING (true);
 CREATE POLICY "Enable all modifications for admin on contacts" ON public.contacts FOR ALL TO authenticated USING (true);
+
+-- 8. Create Gallery Table (Shifting showcase images)
+CREATE TABLE IF NOT EXISTS public.gallery (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    image_url TEXT NOT NULL,
+    caption TEXT NOT NULL,
+    category TEXT NOT NULL DEFAULT 'shifting'
+);
+
+-- Enable RLS for Gallery
+ALTER TABLE public.gallery ENABLE ROW LEVEL SECURITY;
+
+-- Policies for Gallery Table
+CREATE POLICY "Enable read for everyone on gallery" ON public.gallery FOR SELECT USING (true);
+CREATE POLICY "Enable all actions for admin on gallery" ON public.gallery FOR ALL TO authenticated USING (true);

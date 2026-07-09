@@ -40,7 +40,8 @@ import {
   Key,
   Trash2,
   MessageSquare,
-  Search
+  Search,
+  Image
 } from 'lucide-react';
 import { isSupabaseConfigured } from '../supabaseClient';
 import './Admin.css';
@@ -80,6 +81,11 @@ export default function Admin() {
     { id: 'v-3', plate: 'GJ-06-XX-9012', type: '17-ft Closed Container', status: 'in_transit', driver: 'Vijay Rabari', currentRoute: 'Vadodara ➔ Surat' },
     { id: 'v-4', plate: 'GJ-06-WW-3456', type: '20-ft Container Truck', status: 'maintenance', driver: 'N/A', currentRoute: 'Depot Gotri' }
   ]);
+  
+  // Gallery showcase states
+  const [gallery, setGallery] = useState([]);
+  const [newGalleryItem, setNewGalleryItem] = useState({ image_url: '', caption: '', category: 'shifting' });
+  const [galleryFileLabel, setGalleryFileLabel] = useState('No file chosen');
   
   // Loading indicators
   const [loading, setLoading] = useState(false);
@@ -150,11 +156,13 @@ export default function Admin() {
       const allShipments = await dbService.getAllShipments();
       const allReviews = await dbService.getAllReviews();
       const allContacts = await dbService.getContacts();
+      const allGallery = await dbService.getGalleryImages();
 
       setQuotes(allQuotes || []);
       setShipments(allShipments || []);
       setReviews(allReviews || []);
       setContacts(allContacts || []);
+      setGallery(allGallery || []);
 
       if (allQuotes && allQuotes.length > 0 && !selectedAIQuote) {
         setSelectedAIQuote(allQuotes[0]);
@@ -741,6 +749,14 @@ export default function Admin() {
           >
             <Shield size={18} />
             <span>Admin Management</span>
+          </button>
+
+          <button 
+            className={`sidebar-nav-btn ${activeTab === 'gallery_manager' ? 'active' : ''}`}
+            onClick={() => setActiveTab('gallery_manager')}
+          >
+            <Image size={18} />
+            <span>Gallery Showcase</span>
           </button>
         </nav>
 
@@ -2016,6 +2032,161 @@ export default function Admin() {
                     ))}
                 </tbody>
               </table>
+            </div>
+          </div>
+        )}
+
+        {/* Tab Content: Gallery Showcase Manager (V3.0) */}
+        {activeTab === 'gallery_manager' && (
+          <div className="admin-tab-section animate-fade">
+            <div className="section-panel-header">
+              <h3>Gallery Portfolio Manager</h3>
+              <p>Upload high-definition cargo relocation showcase photos. Images display live in the public Shifting Gallery.</p>
+            </div>
+
+            <div className="ai-morphic-insights-grid" style={{ gridTemplateColumns: '1.1fr 1.5fr', alignItems: 'start' }}>
+              {/* Form Card */}
+              <div className="card" style={{ padding: '24px' }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 800, marginBottom: '14px', color: 'var(--primary)' }}>Add Showcase Photo</h4>
+                
+                <form onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!newGalleryItem.caption.trim()) {
+                    alert('Please enter a caption.');
+                    return;
+                  }
+                  if (!newGalleryItem.image_url) {
+                    alert('Please select an image file or enter an image URL.');
+                    return;
+                  }
+                  setUpdating(true);
+                  try {
+                    const saved = await dbService.submitGalleryImage(newGalleryItem);
+                    setGallery(prev => [saved, ...prev]);
+                    setNewGalleryItem({ image_url: '', caption: '', category: 'shifting' });
+                    setGalleryFileLabel('No file chosen');
+                  } catch (err) {
+                    console.error(err);
+                    alert('Failed to upload image.');
+                  } finally {
+                    setUpdating(false);
+                  }
+                }}>
+                  <div className="form-group">
+                    <label className="form-label">Category</label>
+                    <select 
+                      value={newGalleryItem.category} 
+                      onChange={(e) => setNewGalleryItem(prev => ({ ...prev, category: e.target.value }))}
+                      className="form-control"
+                    >
+                      <option value="shifting">Shifting Relocations</option>
+                      <option value="packaging">Packaging Materials</option>
+                      <option value="fleet">Transportation Fleet</option>
+                      <option value="warehouse">Gotri Warehousing</option>
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Upload Showcase Image</label>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <label className="morphic-file-upload" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', cursor: 'pointer', padding: '10px 14px', background: '#f1f5f9', border: '1px dashed #cbd5e1', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 600, color: 'var(--primary-light)' }}>
+                        <Upload size={16} />
+                        <span>Choose Local File</span>
+                        <input 
+                          type="file" 
+                          accept="image/*" 
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              setGalleryFileLabel(file.name);
+                              const reader = new FileReader();
+                              reader.onloadend = () => {
+                                setNewGalleryItem(prev => ({ ...prev, image_url: reader.result }));
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                          style={{ display: 'none' }} 
+                        />
+                      </label>
+                      <span style={{ fontSize: '0.72rem', color: 'var(--muted)' }}>{galleryFileLabel}</span>
+                    </div>
+                  </div>
+
+                  <div style={{ textAlign: 'center', margin: '8px 0', fontSize: '0.74rem', fontWeight: 700, color: 'var(--muted)' }}>— OR —</div>
+
+                  <div className="form-group">
+                    <label className="form-label">Paste Image URL</label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. https://images.unsplash.com/..." 
+                      value={newGalleryItem.image_url.startsWith('data:') ? '' : newGalleryItem.image_url}
+                      onChange={(e) => {
+                        setNewGalleryItem(prev => ({ ...prev, image_url: e.target.value }));
+                        setGalleryFileLabel('No file chosen');
+                      }}
+                      className="form-control"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Image Caption</label>
+                    <textarea 
+                      rows="2"
+                      placeholder="Describe the operation (e.g. Packing household items safely in Gotri)..."
+                      value={newGalleryItem.caption}
+                      onChange={(e) => setNewGalleryItem(prev => ({ ...prev, caption: e.target.value }))}
+                      className="form-control"
+                      required
+                    ></textarea>
+                  </div>
+
+                  <button type="submit" className="btn btn-secondary w-full" style={{ backgroundColor: '#ea580c', borderColor: '#ea580c', width: '100%', marginTop: '10px' }} disabled={updating}>
+                    {updating ? 'Uploading...' : 'Publish to Showcase'}
+                  </button>
+                </form>
+              </div>
+
+              {/* Grid List Card */}
+              <div className="card" style={{ minHeight: '520px', padding: '24px' }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 800, marginBottom: '14px', color: 'var(--primary)' }}>Showcase Gallery Grid</h4>
+                {gallery.length === 0 ? (
+                  <div className="no-data-placeholder">No showcase photos uploaded yet.</div>
+                ) : (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '14px', maxHeight: '480px', overflowY: 'auto', paddingRight: '4px' }}>
+                    {gallery.map((img) => (
+                      <div key={img.id} style={{ position: 'relative', border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column' }}>
+                        <div style={{ width: '100%', height: '100px', overflow: 'hidden', position: 'relative' }}>
+                          <img src={img.image_url} alt={img.caption} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <span style={{ position: 'absolute', top: '4px', left: '4px', fontSize: '0.62rem', fontWeight: 700, backgroundColor: 'rgba(15, 23, 42, 0.72)', color: 'white', padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase' }}>
+                            {img.category}
+                          </span>
+                        </div>
+                        <div style={{ padding: '6px', fontSize: '0.7rem', color: 'var(--primary)', flexGrow: 1, lineBreak: 'anywhere' }}>
+                          {img.caption.length > 40 ? img.caption.substring(0, 37) + '...' : img.caption}
+                        </div>
+                        <button 
+                          onClick={async () => {
+                            if (confirm('Delete this showcase photo?')) {
+                              try {
+                                await dbService.deleteGalleryImage(img.id);
+                                setGallery(prev => prev.filter(item => item.id !== img.id));
+                              } catch (err) {
+                                console.error(err);
+                                alert('Failed to delete image.');
+                              }
+                            }
+                          }}
+                          style={{ position: 'absolute', top: '4px', right: '4px', border: 'none', background: 'rgba(239, 68, 68, 0.9)', color: 'white', width: '20px', height: '20px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifycontent: 'center', cursor: 'pointer', padding: 0 }}
+                          title="Delete image"
+                        >
+                          <Trash2 size={12} style={{ margin: 'auto' }} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}

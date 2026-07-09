@@ -508,5 +508,73 @@ export const dbService = {
       }
       return JSON.parse(localStorage.getItem('rk_contacts'));
     }
+  },
+
+  // === GALLERY IMAGES (V3.0) ===
+  async submitGalleryImage(imgData) {
+    if (isSupabaseConfigured()) {
+      const { data, error } = await supabase
+        .from('gallery')
+        .insert([{
+          image_url: imgData.image_url,
+          caption: imgData.caption,
+          category: imgData.category || 'shifting'
+        }])
+        .select();
+      if (error) throw error;
+      return data[0];
+    } else {
+      const images = JSON.parse(localStorage.getItem('rk_gallery') || '[]');
+      const newImg = {
+        id: 'img-' + Date.now(),
+        created_at: new Date().toISOString(),
+        image_url: imgData.image_url,
+        caption: imgData.caption,
+        category: imgData.category || 'shifting'
+      };
+      images.unshift(newImg);
+      localStorage.setItem('rk_gallery', JSON.stringify(images));
+      return newImg;
+    }
+  },
+
+  async getGalleryImages() {
+    if (isSupabaseConfigured()) {
+      const { data, error } = await supabase
+        .from('gallery')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      return data;
+    } else {
+      const initialGallery = [
+        { id: 'g-1', image_url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600', caption: 'Premium packing for domestic home relocation items in Gotri.', category: 'shifting', created_at: new Date('2026-06-01').toISOString() },
+        { id: 'g-2', image_url: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600', caption: 'Heavy duty cardboard boxes ready for transit load.', category: 'packaging', created_at: new Date('2026-06-05').toISOString() },
+        { id: 'g-3', image_url: 'https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&q=80&w=600', caption: 'Loading operation inside our Vadodara Hub terminal.', category: 'shifting', created_at: new Date('2026-06-10').toISOString() },
+        { id: 'g-4', image_url: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=600', caption: 'Gotri branch relocation fleet trucks ready for highway transit.', category: 'fleet', created_at: new Date('2026-06-15').toISOString() },
+        { id: 'g-5', image_url: 'https://images.unsplash.com/photo-1595246140625-573b715d11dc?auto=format&fit=crop&q=80&w=600', caption: 'Secure warehousing vaults for commercial storage.', category: 'warehouse', created_at: new Date('2026-06-20').toISOString() }
+      ];
+      if (!localStorage.getItem('rk_gallery')) {
+        localStorage.setItem('rk_gallery', JSON.stringify(initialGallery));
+      }
+      return JSON.parse(localStorage.getItem('rk_gallery'));
+    }
+  },
+
+  async deleteGalleryImage(id) {
+    if (isSupabaseConfigured()) {
+      const { data, error } = await supabase
+        .from('gallery')
+        .delete()
+        .eq('id', id)
+        .select();
+      if (error) throw error;
+      return data[0];
+    } else {
+      const images = JSON.parse(localStorage.getItem('rk_gallery') || '[]');
+      const filtered = images.filter(img => img.id !== id);
+      localStorage.setItem('rk_gallery', JSON.stringify(filtered));
+      return { id };
+    }
   }
 };
