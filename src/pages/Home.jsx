@@ -17,7 +17,12 @@ import {
   CheckCircle,
   FileText,
   Phone,
-  Truck
+  Truck,
+  Building2,
+  Warehouse,
+  Quote,
+  ArrowUpRight,
+  Home as HomeIcon
 } from 'lucide-react';
 import { dbService } from '../dbService';
 import './Home.css';
@@ -52,10 +57,10 @@ export default function Home() {
   };
 
   const services = [
-    { title: 'Household Relocation', icon: '🏠', tag: 'Safe Wrap', desc: 'Packing glassware, woodworks, and electronics in multi-layer bubble wrap.' },
-    { title: 'Office Shifting', icon: '🏢', tag: 'Fast Setup', desc: 'Secure transit for servers, workstations, archives, and corporate fixtures.' },
-    { title: 'Vehicle Transportation', icon: '🚚', tag: 'Safe Carrier', desc: 'Closed wheel-locked car and bike carriers covering domestic routes.' },
-    { title: 'Warehouse Storage', icon: '📦', tag: 'Insured Space', desc: 'Clean, CCTV-secure, damp-free warehouse vaults in Gotri, Vadodara.' }
+    { title: 'Household Relocation', icon: <HomeIcon size={26} />, tag: 'Safe Wrap', desc: 'Packing glassware, woodworks, and electronics in multi-layer bubble wrap.' },
+    { title: 'Office Shifting', icon: <Building2 size={26} />, tag: 'Fast Setup', desc: 'Secure transit for servers, workstations, archives, and corporate fixtures.' },
+    { title: 'Vehicle Transportation', icon: <Truck size={26} />, tag: 'Safe Carrier', desc: 'Closed wheel-locked car and bike carriers covering domestic routes.' },
+    { title: 'Warehouse Storage', icon: <Warehouse size={26} />, tag: 'Insured Space', desc: 'Clean, CCTV-secure, damp-free warehouse vaults in Gotri, Vadodara.' }
   ];
 
   const features = [
@@ -173,7 +178,7 @@ export default function Home() {
                 <p>{ser.desc}</p>
                 <Link to="/services" className="service-morphic-link">
                   <span>Explore Service details</span>
-                  <ArrowRight size={14} />
+                  <ArrowUpRight size={16} />
                 </Link>
               </div>
             ))}

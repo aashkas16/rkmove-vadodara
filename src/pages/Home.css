@@ -145,11 +145,11 @@
   transform: translateY(-2px);
 }
 
-/* Services morphic grid */
+/* Services morphic grid V3.0 (Sharp Card overlays) */
 .services-morphic-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 32px;
+  gap: 28px;
 }
 
 .services-morphic-card {
@@ -158,37 +158,61 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 40px 32px !important;
-  background-color: white !important;
-  border-color: rgba(148, 163, 184, 0.1) !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(15, 23, 42, 0.05) !important;
+  box-shadow: var(--glass-shadow) !important;
+}
+
+.services-morphic-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(37, 99, 235, 0.2) !important;
+  box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.12) !important;
 }
 
 .service-morphic-badge {
   position: absolute;
   top: 24px;
   right: 24px;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  color: var(--muted);
-  background-color: var(--light);
+  color: var(--accent-blue);
+  background-color: rgba(37, 99, 235, 0.06);
   padding: 4px 10px;
   border-radius: 4px;
   text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 .service-morphic-icon {
-  font-size: 2.8rem;
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.06);
   margin-bottom: 24px;
+  transition: var(--transition);
+}
+
+.services-morphic-card:hover .service-morphic-icon {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  transform: scale(1.08) rotate(3deg);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
 }
 
 .services-morphic-card h3 {
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-size: 1.25rem;
+  font-weight: 800;
   color: var(--primary);
   margin-bottom: 12px;
 }
 
 .services-morphic-card p {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--muted);
   line-height: 1.6;
   margin-bottom: 28px;
@@ -199,7 +223,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 700;
   color: var(--secondary);
 }
@@ -209,7 +233,7 @@
   color: var(--secondary-hover);
 }
 
-/* Why choose us features */
+/* Why choose us features V3.0 (Left-edge slide highlight) */
 .why-choose-us-morphic {
   background-color: var(--light);
 }
@@ -217,22 +241,54 @@
 .features-morphic-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 32px;
+  gap: 28px;
 }
 
 .feature-morphic-card {
-  padding: 32px !important;
+  padding: 36px 32px !important;
   background-color: white !important;
+  border: 1px solid rgba(15, 23, 42, 0.04) !important;
+  position: relative;
+}
+
+.feature-morphic-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 0;
+  background: var(--accent-blue);
+  transition: var(--transition);
+}
+
+.feature-morphic-card:hover::after {
+  height: 100%;
 }
 
 .feature-morphic-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(234, 88, 12, 0.06);
   color: var(--secondary);
   margin-bottom: 20px;
+  transition: var(--transition);
+}
+
+.feature-morphic-card:hover .feature-morphic-icon-wrapper {
+  transform: scale(1.1);
+  background: var(--secondary);
+  color: white;
+  box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
 }
 
 .feature-morphic-card h3 {
   font-size: 1.15rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--primary);
   margin-bottom: 8px;
 }
@@ -243,26 +299,28 @@
   line-height: 1.6;
 }
 
-/* Horizontal Timeline Steps */
+/* Horizontal Timeline Steps V3.0 (Floating Caps & Connectors) */
 .steps-morphic-timeline {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 24px;
+  gap: 20px;
   margin-top: 40px;
 }
 
 .step-morphic-node {
   background-color: white;
-  border-radius: var(--radius-sm);
-  padding: 24px;
+  border-radius: var(--radius-md);
+  padding: 28px 20px;
   border: 1px solid var(--border);
   box-shadow: var(--glass-shadow);
   transition: var(--transition);
+  position: relative;
 }
 
 .step-morphic-node:hover {
-  transform: translateY(-4px);
-  border-color: var(--secondary);
+  transform: translateY(-8px);
+  border-color: var(--accent-blue);
+  box-shadow: 0 15px 30px -10px rgba(37, 99, 235, 0.15);
 }
 
 .step-morphic-header {
@@ -273,13 +331,15 @@
 }
 
 .step-morphic-number {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: rgba(10, 17, 40, 0.1);
+  font-size: 2.2rem;
+  font-weight: 850;
+  color: #e2e8f0;
+  transition: var(--transition);
 }
 
 .step-morphic-node:hover .step-morphic-number {
-  color: var(--secondary);
+  color: var(--accent-blue);
+  transform: scale(1.05);
 }
 
 .step-node-check {
@@ -288,7 +348,7 @@
 
 .step-morphic-node h3 {
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--primary);
   margin-bottom: 8px;
 }
@@ -299,18 +359,31 @@
   line-height: 1.4;
 }
 
-/* Testimonials / Reviews feedbacks */
+/* Testimonials / Reviews feedbacks V3.0 (Frosted Messaging Quote bubble) */
 .testimonials-morphic-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 32px;
+  gap: 28px;
   margin-bottom: 48px;
 }
 
 .testimonial-morphic-card {
-  padding: 32px !important;
+  padding: 36px !important;
   background-color: white !important;
-  border-color: rgba(148, 163, 184, 0.1) !important;
+  border: 1px solid rgba(15, 23, 42, 0.05) !important;
+  position: relative;
+}
+
+.testimonial-morphic-card::before {
+  content: "“";
+  position: absolute;
+  top: 10px;
+  right: 28px;
+  font-size: 5.5rem;
+  font-family: serif;
+  color: #f1f5f9;
+  line-height: 1;
+  font-weight: 800;
 }
 
 .testimonial-rating-stars {
@@ -326,8 +399,10 @@
   font-style: italic;
   font-size: 0.95rem;
   line-height: 1.6;
-  color: var(--dark-light);
+  color: #334155;
   margin-bottom: 24px;
+  position: relative;
+  z-index: 2;
 }
 
 .testimonial-morphic-user {
@@ -337,26 +412,27 @@
 }
 
 .user-avatar-initial {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background-color: var(--primary-light);
+  background: linear-gradient(135deg, var(--accent-blue) 0%, #1d4ed8 100%);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 1rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
 }
 
 .testimonial-morphic-user h4 {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   font-weight: 700;
   color: var(--primary);
 }
 
 .testimonial-morphic-user span {
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   color: var(--muted);
 }
 
@@ -365,7 +441,7 @@
   justify-content: center;
 }
 
-/* Accordion FAQs */
+/* Accordion FAQs V3.0 (Sharp hover border & toggled highlights) */
 .faq-morphic-list {
   max-width: 800px;
   margin: 0 auto;
@@ -380,51 +456,56 @@
   background-color: white;
   cursor: pointer;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.01);
   transition: var(--transition);
 }
 
 .faq-morphic-item:hover {
-  border-color: var(--secondary);
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: 0 8px 16px -4px rgba(15, 23, 42, 0.05);
+}
+
+.faq-morphic-item.active {
+  border-color: var(--accent-blue);
+  box-shadow: 0 8px 24px -6px rgba(37, 99, 235, 0.08);
 }
 
 .faq-morphic-question {
-  padding: 20px 24px;
+  padding: 22px 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--primary);
-  font-size: 0.95rem;
+  font-size: 0.98rem;
+  transition: var(--transition);
+}
+
+.faq-morphic-item.active .faq-morphic-question {
+  color: var(--accent-blue);
 }
 
 .faq-morphic-answer {
-  padding: 0 24px 24px 24px;
+  padding: 0 28px 24px 28px;
   font-size: 0.9rem;
   color: var(--muted);
   line-height: 1.6;
-  border-top: 1px solid rgba(148, 163, 184, 0.1);
-  padding-top: 16px;
+  border-top: 1px dashed rgba(148, 163, 184, 0.15);
+  padding-top: 18px;
+  animation: slideUp 0.3s ease-out forwards;
 }
 
-@media (max-width: 968px) {
-  .rk-exact-hero {
-    padding: 100px 0 100px 0;
+@media (max-width: 1024px) {
+  .steps-morphic-timeline {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
   }
-  .exact-hero-title {
-    font-size: 3.2rem;
-  }
-  .exact-hero-actions-row {
-    flex-direction: column;
-    width: 100%;
-    align-items: stretch;
-  }
-  .exact-hero-actions-row .btn,
-  .exact-hero-actions-row a {
-    width: 100%;
-  }
+}
+
+@media (max-width: 768px) {
   .steps-morphic-timeline {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
   }
 }
 
