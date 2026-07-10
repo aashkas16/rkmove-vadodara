@@ -48,9 +48,9 @@ export default function Navbar() {
         </ul>
 
         <div className="nav-right-actions">
-          <a href="tel:+919876543210" className="nav-phone">
+          <a href="tel:+916359225925" className="nav-phone">
             <PhoneCall size={18} />
-            <span>+91 98765 43210</span>
+            <span>+91 63592 25925</span>
           </a>
           <Link to="/calculator" className="btn btn-primary nav-cta">
             Get Quote

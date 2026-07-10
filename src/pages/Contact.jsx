@@ -96,8 +96,7 @@ export default function Contact() {
                 <div>
                   <h4>Call Customer Support</h4>
                   <p>
-                    <a href="tel:+919876543210">+91 98765 43210</a> <br />
-                    <a href="tel:+919998877766">+91 99988 77766</a>
+                    <a href="tel:+916359225925">+91 63592 25925</a>
                   </p>
                 </div>
               </div>
@@ -181,7 +180,7 @@ export default function Contact() {
                       className="form-control" 
                       value={inquiryData.phone} 
                       onChange={handleInquiryChange}
-                      placeholder="e.g. 9876543210"
+                      placeholder="e.g. 6359225925"
                       pattern="[0-9]{10}"
                       required 
                     />

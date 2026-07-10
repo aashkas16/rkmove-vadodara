@@ -152,7 +152,7 @@ export default function Home() {
               <FileText size={18} />
               <span>Get Free Quote</span>
             </button>
-            <a href="tel:+919876543210" className="btn btn-exact-call">
+            <a href="tel:+916359225925" className="btn btn-exact-call">
               <Phone size={18} />
               <span>Call Now</span>
             </a>

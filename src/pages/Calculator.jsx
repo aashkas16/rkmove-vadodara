@@ -391,7 +391,7 @@ export default function Calculator() {
                   className="form-control"
                   value={formData.phone} 
                   onChange={handleChange} 
-                  placeholder="e.g. 9876543210"
+                  placeholder="e.g. 6359225925"
                   pattern="[0-9]{10}"
                   title="Please enter a valid 10-digit phone number"
                   required 

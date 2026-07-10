@@ -24,7 +24,7 @@ export default function Footer() {
             </div>
             <div className="contact-item">
               <Phone size={18} className="footer-icon" />
-              <a href="tel:+919876543210">+91 98765 43210</a>
+              <a href="tel:+916359225925">+91 63592 25925</a>
             </div>
             <div className="contact-item">
               <Mail size={18} className="footer-icon" />

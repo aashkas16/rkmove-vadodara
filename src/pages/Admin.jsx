@@ -72,8 +72,8 @@ export default function Admin() {
 
   // Additional tables from screenshot
   const [contacts, setContacts] = useState([
-    { id: 'c-1', name: 'Aashka Shah', email: 'aashka@gmail.com', phone: '9876543211', subject: 'Quote Enquiry', message: 'Need shifting from Vadodara to Ahmedabad next week. Call me.', date: '7/2/2026' },
-    { id: 'c-2', name: 'Mehul Mehta', email: 'mehul@outlook.com', phone: '9822334455', subject: 'Corporate Shifting', message: 'Moving 20 workstations from Alkapuri to Gotri. Need IBA approved quotation.', date: '7/5/2026' }
+    { id: 'c-1', name: 'Aashka Shah', email: 'aashka@gmail.com', phone: '6359225925', subject: 'Quote Enquiry', message: 'Need shifting from Vadodara to Ahmedabad next week. Call me.', date: '7/2/2026' },
+    { id: 'c-2', name: 'Mehul Mehta', email: 'mehul@outlook.com', phone: '6359225925', subject: 'Corporate Shifting', message: 'Moving 20 workstations from Alkapuri to Gotri. Need IBA approved quotation.', date: '7/5/2026' }
   ]);
   const [vehicles, setVehicles] = useState([
     { id: 'v-1', plate: 'GJ-06-ZZ-1234', type: 'Tata Ace', status: 'available', driver: 'Ramesh Solanki', currentRoute: 'Local Vadodara' },

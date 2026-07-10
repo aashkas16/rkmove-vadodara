@@ -69,7 +69,7 @@ export default function Chatbot() {
     }
     // 5. Contact / phone call
     else if (text.includes('call') || text.includes('phone') || text.includes('number') || text.includes('contact') || text.includes('mobile')) {
-      reply = "📞 You can contact our Gotri, Vadodara branch managers directly at +91 98765 43210 or +91 99988 77766. We are open from Mon-Sat (9:00 AM to 8:00 PM).";
+      reply = "📞 You can contact our Gotri, Vadodara branch managers directly at +91 63592 25925. We are open from Mon-Sat (9:00 AM to 8:00 PM).";
     }
     // 6. Redirect triggers
     else if (text === 'redirect_calculator') {
