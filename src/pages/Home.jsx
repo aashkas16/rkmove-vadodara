@@ -81,6 +81,11 @@ export default function Home() {
 
   return (
     <div className="home-container animate-fade">
+      {/* Glowing Decorative Orbs */}
+      <div className="glowing-bg-orb orb-1"></div>
+      <div className="glowing-bg-orb orb-2"></div>
+      <div className="glowing-bg-orb orb-3"></div>
+
       {/* Clean Branding Hero - Replicating rkmove.com exactly */}
       <section className="rk-exact-hero" style={{ backgroundImage: `linear-gradient(to right, rgba(9, 15, 34, 0.92) 40%, rgba(9, 15, 34, 0.4)), url('/hero_moving_service.png')` }}>
         <div className="container hero-exact-content">
