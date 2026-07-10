@@ -22,7 +22,11 @@ import {
   Warehouse,
   Quote,
   ArrowUpRight,
-  Home as HomeIcon
+  Home as HomeIcon,
+  Headphones,
+  DollarSign,
+  Clock,
+  Map
 } from 'lucide-react';
 import { dbService } from '../dbService';
 import './Home.css';
@@ -57,17 +61,21 @@ export default function Home() {
   };
 
   const services = [
-    { title: 'Household Relocation', icon: <HomeIcon size={26} />, tag: 'Safe Wrap', desc: 'Packing glassware, woodworks, and electronics in multi-layer bubble wrap.' },
-    { title: 'Office Shifting', icon: <Building2 size={26} />, tag: 'Fast Setup', desc: 'Secure transit for servers, workstations, archives, and corporate fixtures.' },
-    { title: 'Vehicle Transportation', icon: <Truck size={26} />, tag: 'Safe Carrier', desc: 'Closed wheel-locked car and bike carriers covering domestic routes.' },
-    { title: 'Warehouse Storage', icon: <Warehouse size={26} />, tag: 'Insured Space', desc: 'Clean, CCTV-secure, damp-free warehouse vaults in Gotri, Vadodara.' }
+    { title: 'Household Relocation', icon: <HomeIcon size={26} />, tag: 'Safe Wrap', desc: 'Packing glassware, woodworks, and electronics in multi-layer bubble wrap.', pills: ['household shifting', 'home relocation', 'furniture moving'] },
+    { title: 'Office Shifting', icon: <Building2 size={26} />, tag: 'Fast Setup', desc: 'Secure transit for servers, workstations, archives, and corporate fixtures.', pills: ['office relocation', 'corporate moving', 'commercial shifting'] },
+    { title: 'Vehicle Transportation', icon: <Truck size={26} />, tag: 'Safe Carrier', desc: 'Closed wheel-locked car and bike carriers covering domestic routes.', pills: ['car transport', 'bike shifting', 'vehicle relocation'] },
+    { title: 'Warehouse Storage', icon: <Warehouse size={26} />, tag: 'Insured Space', desc: 'Clean, CCTV-secure, damp-free warehouse vaults in Gotri, Vadodara.', pills: ['warehousing', 'storage services', 'goods storage'] }
   ];
 
   const features = [
-    { icon: <ShieldCheck size={24} />, title: 'Premium Packing', desc: 'Multi-layer bubble wrap, foam guards, and custom carton crates protect fragile goods.' },
-    { icon: <Compass size={24} />, title: 'Live Cargo Tracking', desc: 'Enter your Lorry Receipt (LR) code to check dispatch milestones.' },
-    { icon: <Award size={24} />, title: 'IBA Approved Vendor', desc: 'Fully licensed and certified to issue IBA bills for bank and corporate officers.' },
-    { icon: <Users size={24} />, title: 'Expert Local Crews', desc: 'Our trained in-house loaders safely carry heavy furniture via stairs and elevators.' }
+    { icon: <ShieldCheck size={24} />, title: 'Fully Insured', desc: '100% transit insurance coverage for all your goods. Zero risk, complete peace of mind.' },
+    { icon: <Clock size={24} />, title: 'On-Time Delivery', desc: 'Guaranteed delivery schedules. We respect your time and commitments.' },
+    { icon: <Map size={24} />, title: 'PAN India Network', desc: '200+ cities covered. Wherever you move, we\'re already there.' },
+    { icon: <Users size={24} />, title: 'Expert Team', desc: 'Trained, background-verified professionals handling your valuables.' },
+    { icon: <Award size={24} />, title: '15+ Years Experience', desc: 'Trusted since 2009. Thousands of successful relocations across India.' },
+    { icon: <DollarSign size={24} />, title: 'Transparent Pricing', desc: 'No hidden charges. Get accurate quotes upfront before we begin.' },
+    { icon: <Headphones size={24} />, title: 'Dedicated Support', desc: '24/7 customer support throughout your move. We\'re always reachable.' },
+    { icon: <Zap size={24} />, title: 'Fast Processing', desc: 'Quick booking, swift packing, and express delivery options available.' }
   ];
 
   const faqs = [
@@ -77,6 +85,13 @@ export default function Home() {
     { q: 'Do you dismantle and reassemble furniture?', a: 'Yes. Our crew handles dismantling and reassembling of beds, wardrobes, dining tables, and TVs as part of our domestic relocation services.' },
     { q: 'Is RK Cargo Packers and Movers IBA Approved?', a: 'Yes, RK Cargo is an IBA Approved logistics vendor in Vadodara. We issue verified invoice bills, lorry receipts, and loading summaries for employee claims.' },
     { q: 'How early should I book my relocation?', a: 'We recommend booking 3 to 7 days before your shifting date to secure your desired slot and ensure coordination, especially during weekend shifts.' }
+  ];
+
+  const steps = [
+    { num: '01', title: 'Get Free Quote', desc: 'Contact us or fill the form. We\'ll provide a transparent, no-obligation quote within minutes.', badge: 'Takes 2 mins' },
+    { num: '02', title: 'Schedule Your Move', desc: 'Pick a date that works for you. Our team plans and confirms every detail of your relocation.', badge: 'Flexible dates' },
+    { num: '03', title: 'Expert Packing', desc: 'Our trained packers arrive on time with quality materials to safely pack all your belongings.', badge: 'Zero damage' },
+    { num: '04', title: 'Safe Delivery', desc: 'Your goods are transported and delivered safely. Track your shipment in real-time.', badge: 'On-time guaranteed' }
   ];
 
   return (
@@ -181,6 +196,18 @@ export default function Home() {
                 <div className="service-morphic-icon">{ser.icon}</div>
                 <h3>{ser.title}</h3>
                 <p>{ser.desc}</p>
+                
+                {/* Tag Pills matching rkmove.com style */}
+                {ser.pills && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
+                    {ser.pills.map((pill, pIdx) => (
+                      <span key={pIdx} style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--muted)', background: '#f1f5f9', border: '1px solid #e2e8f0', padding: '4px 10px', borderRadius: '4px', textTransform: 'capitalize' }}>
+                        {pill}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
                 <Link to="/services" className="service-morphic-link">
                   <span>Explore Service details</span>
                   <ArrowUpRight size={16} />
@@ -215,16 +242,10 @@ export default function Home() {
       <section className="section steps-morphic-section">
         <div className="container">
           <h2 className="section-title"><span>Relocation Process</span></h2>
-          <p className="section-subtitle">5 steps to transition to your new home.</p>
+          <p className="section-subtitle">Moving made simple in 4 easy steps. From booking to delivery, we handle everything.</p>
           
           <div className="steps-morphic-timeline">
-            {[
-              { num: '01', title: 'Get Quote', desc: 'Estimate charges online.' },
-              { num: '02', title: 'Safe Packing', desc: 'Multi-layer bubble protection.' },
-              { num: '03', title: 'Load Cargo', desc: 'Secure loading into containers.' },
-              { num: '04', title: 'Road Transit', desc: 'GPS timeline tracking logs.' },
-              { num: '05', title: 'Setup Home', desc: 'Unpacking and furniture assembly.' }
-            ].map((step, idx) => (
+            {steps.map((step, idx) => (
               <div key={idx} className="step-morphic-node">
                 <div className="step-morphic-header">
                   <span className="step-morphic-number">{step.num}</span>
@@ -232,6 +253,12 @@ export default function Home() {
                 </div>
                 <h3>{step.title}</h3>
                 <p>{step.desc}</p>
+                {step.badge && (
+                  <div style={{ marginTop: '14px', display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.74rem', fontWeight: 700, color: '#15803d', background: '#dcfce7', padding: '4px 10px', borderRadius: '4px' }}>
+                    <Sparkles size={10} style={{ color: '#16a34a' }} />
+                    <span>{step.badge}</span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -303,6 +330,44 @@ export default function Home() {
               Write Shifting Feedback
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Service Areas Section matching rkmove.com style */}
+      <section className="section service-areas-section" style={{ borderTop: '1px solid var(--border)', background: 'white' }}>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <span style={{ fontSize: '0.74rem', fontWeight: 800, color: 'var(--secondary)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>Service Areas</span>
+          <h2 className="section-title" style={{ marginTop: '8px' }}>Packers & Movers <span>Across India</span></h2>
+          <p className="section-subtitle">RK Cargo provides professional packers and movers services in 200+ cities. Whether you're moving locally or relocating across India, we've got you covered.</p>
+          
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px', maxWidth: '900px', margin: '36px auto 20px auto' }}>
+            {['Ahmedabad', 'Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'Hyderabad', 'Pune', 'Kolkata', 'Surat', 'Jaipur', 'Rajkot', 'Vadodara', 'Indore', 'Bhopal', 'Nagpur', 'Nasik'].map((city) => (
+              <Link 
+                key={city} 
+                to="/contact" 
+                style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '50px', padding: '10px 22px', fontSize: '0.86rem', fontWeight: 700, color: 'var(--primary)', textDecoration: 'none', transition: 'var(--transition)' }}
+                className="city-tab-btn"
+                onMouseEnter={(e) => {
+                  e.target.style.borderColor = 'var(--accent-blue)';
+                  e.target.style.color = 'var(--accent-blue)';
+                  e.target.style.background = 'white';
+                  e.target.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.borderColor = '#e2e8f0';
+                  e.target.style.color = 'var(--primary)';
+                  e.target.style.background = '#f8fafc';
+                  e.target.style.transform = 'translateY(0)';
+                }}
+              >
+                {city}
+              </Link>
+            ))}
+          </div>
+          
+          <p style={{ fontSize: '0.88rem', color: 'var(--muted)', fontWeight: 600, marginTop: '24px' }}>
+            + 180 more cities across India. <Link to="/contact" style={{ color: 'var(--secondary)', fontWeight: 700, textDecoration: 'underline' }}>Contact us</Link> to check availability in your city.
+          </p>
         </div>
       </section>
 

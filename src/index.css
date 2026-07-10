@@ -270,3 +270,30 @@ button, input, select, textarea {
 .badge-paid { background-color: #d1fae5; color: #047857; }
 .badge-partial { background-color: #ffedd5; color: #c2410c; }
 .badge-unpaid { background-color: #fee2e2; color: #b91c1c; }
+
+/* Floating WhatsApp Button (V3.5) */
+.whatsapp-float-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9999;
+  background-color: #25d366;
+  color: white;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.whatsapp-float-btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+  background-color: #20ba5a;
+  color: white;
+}
