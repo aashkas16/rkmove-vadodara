@@ -183,6 +183,33 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Infinite Trust Partners Marquee Ticker (V3.5 Premium) */}
+      <section className="trust-marquee-section">
+        <div className="marquee-container">
+          <div className="marquee-track">
+            {[
+              'IBA Approved Packers & Movers',
+              'ISO 9001:2015 Certified Logistics',
+              'GST Registered Tax Compliant Invoice',
+              'GPS Tracked Cargo Fleet Carriers',
+              '100% Fully Insured Shifting',
+              'Background Verified Crew Loaders',
+              'IBA Approved Packers & Movers',
+              'ISO 9001:2015 Certified Logistics',
+              'GST Registered Tax Compliant Invoice',
+              'GPS Tracked Cargo Fleet Carriers',
+              '100% Fully Insured Shifting',
+              'Background Verified Crew Loaders'
+            ].map((text, index) => (
+              <div key={index} className="marquee-item">
+                <span className="marquee-dot"></span>
+                <span>{text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section className="section services-morphic-section">
         <div className="container">
