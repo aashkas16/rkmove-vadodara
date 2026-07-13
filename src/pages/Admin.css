@@ -1103,61 +1103,93 @@ tr:hover td {
   border-radius: var(--radius-md) !important;
 }
 
-@media (max-width: 1400px) {
-  .dashboard-stats-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 1200px) {
-  .compartments-grid-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 @media (max-width: 1024px) {
+  .admin-morphic-outer {
+    flex-direction: column !important;
+  }
   .admin-morphic-sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    padding: 16px;
+    width: 100% !important;
+    height: auto !important;
+    position: relative !important;
+    padding: 20px 16px !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   }
   .sidebar-brand-box {
-    margin-bottom: 14px;
-    padding-bottom: 10px;
+    margin-bottom: 16px !important;
+    padding-bottom: 12px !important;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.08) !important;
   }
   .sidebar-nav-links {
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+    gap: 8px !important;
+    margin-bottom: 16px !important;
+  }
+  .sidebar-footer-box {
+    border-top: 1px dashed rgba(255, 255, 255, 0.08) !important;
+    padding-top: 12px !important;
+    display: flex;
+    justify-content: flex-end;
   }
   .admin-morphic-main-panel {
-    height: auto;
-    padding: 20px;
+    width: 100% !important;
+    height: auto !important;
+    padding: 24px 16px !important;
   }
   .dashboard-charts-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
   .finance-morphic-stats-row {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr !important;
   }
   .ai-morphic-insights-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
   .image-upload-row {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .dashboard-stats-grid {
+    grid-template-columns: 1fr 1fr !important;
   }
 }
 
 @media (max-width: 768px) {
   .compartments-grid-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .sidebar-nav-links {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  .grid-2-col {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    margin-bottom: 16px !important;
+  }
+  .section-panel-header.flex-space-between {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
+  .section-panel-header.flex-space-between button {
+    width: 100% !important;
   }
 }
 
 @media (max-width: 600px) {
-  .dashboard-stats-grid,
+  .dashboard-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
   .finance-morphic-stats-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+  }
+  .sidebar-nav-links {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .admin-status-modal {
+    width: 95% !important;
+    padding: 20px 16px !important;
   }
 }
