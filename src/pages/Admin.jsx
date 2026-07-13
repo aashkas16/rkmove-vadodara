@@ -39,6 +39,7 @@ import {
   Shield,
   Key,
   Trash2,
+  Edit,
   MessageSquare,
   Search,
   Image
@@ -135,6 +136,11 @@ export default function Admin() {
 
   // AI Active Insight Selector
   const [selectedAIQuote, setSelectedAIQuote] = useState(null);
+
+  // Generic Edit Entity Modal (quotes, shipments, reviews, contacts, vehicles)
+  const [editingEntity, setEditingEntity] = useState(null); // { category: 'quote'|'shipment'|'review'|'contact'|'vehicle', data: { ... } }
+  const [showAddVehicleModal, setShowAddVehicleModal] = useState(false);
+  const [newVehicleForm, setNewVehicleForm] = useState({ plate: '', type: '', status: 'available', driver: '', currentRoute: '' });
 
   useEffect(() => {
     const adminToken = localStorage.getItem('rk_admin_session');
@@ -266,6 +272,114 @@ export default function Admin() {
       }
     };
     reader.readAsDataURL(file);
+  };
+
+  // Delete handlers
+  const handleDeleteQuote = async (id) => {
+    if (confirm('Are you sure you want to delete this customer quote?')) {
+      setUpdating(true);
+      try {
+        await dbService.deleteQuote(id);
+        await fetchData();
+      } catch (err) {
+        console.error(err);
+        alert('Failed to delete quote.');
+      } finally {
+        setUpdating(false);
+      }
+    }
+  };
+
+  const handleDeleteShipment = async (id) => {
+    if (confirm('Are you sure you want to delete this shipment tracking record?')) {
+      setUpdating(true);
+      try {
+        await dbService.deleteShipment(id);
+        await fetchData();
+      } catch (err) {
+        console.error(err);
+        alert('Failed to delete shipment.');
+      } finally {
+        setUpdating(false);
+      }
+    }
+  };
+
+  const handleDeleteReview = async (id) => {
+    if (confirm('Are you sure you want to delete this customer review?')) {
+      setUpdating(true);
+      try {
+        await dbService.deleteReview(id);
+        await fetchData();
+      } catch (err) {
+        console.error(err);
+        alert('Failed to delete review.');
+      } finally {
+        setUpdating(false);
+      }
+    }
+  };
+
+  const handleDeleteContact = async (id) => {
+    if (confirm('Are you sure you want to delete this support inquiry?')) {
+      setUpdating(true);
+      try {
+        await dbService.deleteContact(id);
+        await fetchData();
+      } catch (err) {
+        console.error(err);
+        alert('Failed to delete contact inquiry.');
+      } finally {
+        setUpdating(false);
+      }
+    }
+  };
+
+  const handleDeleteVehicle = (id) => {
+    if (confirm('Delete this vehicle from local fleet?')) {
+      setVehicles(vehicles.filter(v => v.id !== id));
+    }
+  };
+
+  const handleCreateVehicle = (e) => {
+    e.preventDefault();
+    if (!newVehicleForm.plate || !newVehicleForm.type) {
+      alert('Please fill out all required fields.');
+      return;
+    }
+    const newV = {
+      id: 'v-' + Date.now(),
+      ...newVehicleForm
+    };
+    setVehicles(prev => [...prev, newV]);
+    setShowAddVehicleModal(false);
+    setNewVehicleForm({ plate: '', type: '', status: 'available', driver: '', currentRoute: '' });
+  };
+
+  const handleSaveEditEntity = async (e) => {
+    e.preventDefault();
+    setUpdating(true);
+    const { category, data } = editingEntity;
+    try {
+      if (category === 'quote') {
+        await dbService.updateQuote(data.id, data);
+      } else if (category === 'shipment') {
+        await dbService.updateShipmentDetails(data.id, data);
+      } else if (category === 'review') {
+        await dbService.updateReviewDetails(data.id, data);
+      } else if (category === 'contact') {
+        await dbService.updateContactDetails(data.id, data);
+      } else if (category === 'vehicle') {
+        setVehicles(prev => prev.map(v => v.id === data.id ? data : v));
+      }
+      setEditingEntity(null);
+      await fetchData();
+    } catch (err) {
+      console.error(err);
+      alert(`Failed to save changes to ${category}.`);
+    } finally {
+      setUpdating(false);
+    }
   };
 
   // Shipments Operations
@@ -511,7 +625,23 @@ export default function Admin() {
             <h4>{quote.name}</h4>
             <span className="comp-card-phone">{quote.phone}</span>
           </div>
-          <span className={`badge badge-${quote.status}`}>{quote.status}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span className={`badge badge-${quote.status}`}>{quote.status}</span>
+            <button 
+              onClick={() => setEditingEntity({ category: 'quote', data: { ...quote } })}
+              style={{ border: 'none', background: 'transparent', color: '#2563eb', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}
+              title="Edit Quote"
+            >
+              <Edit size={14} />
+            </button>
+            <button 
+              onClick={() => handleDeleteQuote(quote.id)}
+              style={{ border: 'none', background: 'transparent', color: '#ef4444', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}
+              title="Delete Quote"
+            >
+              <Trash2 size={14} />
+            </button>
+          </div>
         </div>
 
         <div className="comp-card-route">
@@ -1358,12 +1488,26 @@ export default function Admin() {
                             <span className="text-muted">None</span>
                           )}
                         </td>
-                        <td>
+                        <td style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                           <button 
                             onClick={() => handleEditShipmentClick(ship)} 
                             className="btn-small btn-confirm"
                           >
                             Update Status
+                          </button>
+                          <button 
+                            onClick={() => setEditingEntity({ category: 'shipment', data: { ...ship } })}
+                            style={{ border: 'none', background: 'transparent', color: '#2563eb', cursor: 'pointer', padding: '4px', display: 'inline-flex', alignItems: 'center' }}
+                            title="Edit Details"
+                          >
+                            <Edit size={14} />
+                          </button>
+                          <button 
+                            onClick={() => handleDeleteShipment(ship.id)}
+                            style={{ border: 'none', background: 'transparent', color: '#ef4444', cursor: 'pointer', padding: '4px', display: 'inline-flex', alignItems: 'center' }}
+                            title="Delete Shipment"
+                          >
+                            <Trash2 size={14} />
                           </button>
                         </td>
                       </tr>
@@ -1785,14 +1929,14 @@ export default function Admin() {
                             <span className="badge badge-pending">Pending Approval</span>
                           )}
                         </td>
-                        <td>
+                        <td style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                           {rev.is_approved ? (
                             <button 
                               onClick={() => handleApproveReview(rev.id, false)} 
                               className="btn-small btn-reject"
                               disabled={updating}
                             >
-                              Hide Testimonial
+                              Hide
                             </button>
                           ) : (
                             <button 
@@ -1800,9 +1944,23 @@ export default function Admin() {
                               className="btn-small btn-confirm"
                               disabled={updating}
                             >
-                              Approve & Show
+                              Approve
                             </button>
                           )}
+                          <button 
+                            onClick={() => setEditingEntity({ category: 'review', data: { ...rev } })}
+                            style={{ border: 'none', background: 'transparent', color: '#2563eb', cursor: 'pointer', padding: '4px', display: 'inline-flex', alignItems: 'center' }}
+                            title="Edit Review"
+                          >
+                            <Edit size={14} />
+                          </button>
+                          <button 
+                            onClick={() => handleDeleteReview(rev.id)}
+                            style={{ border: 'none', background: 'transparent', color: '#ef4444', cursor: 'pointer', padding: '4px', display: 'inline-flex', alignItems: 'center' }}
+                            title="Delete Review"
+                          >
+                            <Trash2 size={14} />
+                          </button>
                         </td>
                       </tr>
                     ))
@@ -1862,9 +2020,18 @@ export default function Admin() {
         {/* Tab Content: Shifting Vehicles Fleet (V2.5) */}
         {activeTab === 'vehicles' && (
           <div className="admin-tab-section animate-fade">
-            <div className="section-panel-header">
-              <h3>Shifting Vehicles Fleet</h3>
-              <p>Monitor container trucks, transport statuses, and assigned highway routes.</p>
+            <div className="section-panel-header flex-space-between">
+              <div>
+                <h3>Shifting Vehicles Fleet</h3>
+                <p>Monitor container trucks, transport statuses, and assigned highway routes.</p>
+              </div>
+              <button 
+                onClick={() => setShowAddVehicleModal(true)} 
+                className="btn btn-primary"
+              >
+                <PlusCircle size={16} />
+                <span>Add Vehicle</span>
+              </button>
             </div>
             <div className="table-container">
               <table>
@@ -1875,6 +2042,7 @@ export default function Admin() {
                     <th>Assigned Driver</th>
                     <th>Current Station Route</th>
                     <th>Status</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1888,6 +2056,22 @@ export default function Admin() {
                         <span className={`badge ${v.status === 'available' ? 'badge-completed' : v.status === 'in_transit' ? 'badge-active' : 'badge-cancelled'}`}>
                           {v.status.replace('_', ' ')}
                         </span>
+                      </td>
+                      <td style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                        <button 
+                          onClick={() => setEditingEntity({ category: 'vehicle', data: { ...v } })}
+                          style={{ border: 'none', background: 'transparent', color: '#2563eb', cursor: 'pointer', padding: '4px', display: 'inline-flex', alignItems: 'center' }}
+                          title="Edit Vehicle"
+                        >
+                          <Edit size={14} />
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteVehicle(v.id)}
+                          style={{ border: 'none', background: 'transparent', color: '#ef4444', cursor: 'pointer', padding: '4px', display: 'inline-flex', alignItems: 'center' }}
+                          title="Delete Vehicle"
+                        >
+                          <Trash2 size={14} />
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -1913,6 +2097,7 @@ export default function Admin() {
                     <th>Subject</th>
                     <th>Message</th>
                     <th>Received Date</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1926,6 +2111,22 @@ export default function Admin() {
                       <td>{c.subject}</td>
                       <td style={{ maxWidth: '300px', whiteSpace: 'normal' }}>"{c.message}"</td>
                       <td>{c.date || (c.created_at ? new Date(c.created_at).toLocaleDateString('en-US') : 'N/A')}</td>
+                      <td style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                        <button 
+                          onClick={() => setEditingEntity({ category: 'contact', data: { ...c } })}
+                          style={{ border: 'none', background: 'transparent', color: '#2563eb', cursor: 'pointer', padding: '4px', display: 'inline-flex', alignItems: 'center' }}
+                          title="Edit Inquiry"
+                        >
+                          <Edit size={14} />
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteContact(c.id)}
+                          style={{ border: 'none', background: 'transparent', color: '#ef4444', cursor: 'pointer', padding: '4px', display: 'inline-flex', alignItems: 'center' }}
+                          title="Delete Inquiry"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -2191,6 +2392,499 @@ export default function Admin() {
           </div>
         )}
       </main>
+
+      {/* 1. Generic Edit Entity Modal (quotes, shipments, reviews, contacts, vehicles) */}
+      {editingEntity && (
+        <div className="admin-modal-overlay" style={{ zIndex: 10000 }}>
+          <form onSubmit={handleSaveEditEntity} className="admin-status-modal card glass animate-fade" style={{ maxWidth: '600px', width: '95%', maxHeight: '90vh', display: 'flex', flexDirection: 'column' }}>
+            <h3 style={{ marginBottom: '8px' }}>Edit {editingEntity.category.toUpperCase()} Record</h3>
+            <p style={{ fontSize: '0.78rem', color: 'var(--muted)', marginBottom: '16px' }}>Modify field values for item ID: {editingEntity.data.id}</p>
+            
+            <div style={{ flexGrow: 1, overflowY: 'auto', paddingRight: '10px', marginBottom: '20px' }}>
+              
+              {/* EDIT QUOTE FIELDS */}
+              {editingEntity.category === 'quote' && (
+                <>
+                  <div className="form-group">
+                    <label className="form-label">Client Name *</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.name || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, name: e.target.value } }))}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Phone *</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.phone || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, phone: e.target.value } }))}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Email</label>
+                    <input 
+                      type="email" 
+                      value={editingEntity.data.email || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, email: e.target.value } }))}
+                      className="form-control"
+                    />
+                  </div>
+                  <div className="grid-2-col">
+                    <div className="form-group">
+                      <label className="form-label">Origin City *</label>
+                      <input 
+                        type="text" 
+                        value={editingEntity.data.origin_city || ''} 
+                        onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, origin_city: e.target.value } }))}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Destination City *</label>
+                      <input 
+                        type="text" 
+                        value={editingEntity.data.destination_city || ''} 
+                        onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, destination_city: e.target.value } }))}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="grid-2-col">
+                    <div className="form-group">
+                      <label className="form-label">Move Size *</label>
+                      <input 
+                        type="text" 
+                        value={editingEntity.data.move_size || ''} 
+                        onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, move_size: e.target.value } }))}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Moving Date *</label>
+                      <input 
+                        type="date" 
+                        value={editingEntity.data.moving_date || ''} 
+                        onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, moving_date: e.target.value } }))}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="grid-2-col">
+                    <div className="form-group">
+                      <label className="form-label">Estimated Cost (₹) *</label>
+                      <input 
+                        type="number" 
+                        value={editingEntity.data.estimated_cost || 0} 
+                        onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, estimated_cost: Number(e.target.value) } }))}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Payment Status</label>
+                      <select 
+                        value={editingEntity.data.payment_status || 'unpaid'} 
+                        onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, payment_status: e.target.value } }))}
+                        className="form-control"
+                      >
+                        <option value="unpaid">Unpaid</option>
+                        <option value="partial">Partial</option>
+                        <option value="paid">Paid</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Quote Status</label>
+                    <select 
+                      value={editingEntity.data.status || 'pending'} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, status: e.target.value } }))}
+                      className="form-control"
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="quoted">Quoted</option>
+                      <option value="booked">Booked</option>
+                      <option value="completed">Completed</option>
+                      <option value="cancelled">Cancelled</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Internal Notes / Log</label>
+                    <textarea 
+                      rows="3"
+                      value={editingEntity.data.notes || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, notes: e.target.value } }))}
+                      className="form-control"
+                    ></textarea>
+                  </div>
+                </>
+              )}
+
+              {/* EDIT SHIPMENT FIELDS */}
+              {editingEntity.category === 'shipment' && (
+                <>
+                  <div className="form-group">
+                    <label className="form-label">Lorry Receipt (LR) Number *</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.lr_number || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, lr_number: e.target.value.toUpperCase() } }))}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Customer Name *</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.customer_name || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, customer_name: e.target.value } }))}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Customer Phone *</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.customer_phone || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, customer_phone: e.target.value } }))}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="grid-2-col">
+                    <div className="form-group">
+                      <label className="form-label">Origin *</label>
+                      <input 
+                        type="text" 
+                        value={editingEntity.data.origin || ''} 
+                        onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, origin: e.target.value } }))}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Destination *</label>
+                      <input 
+                        type="text" 
+                        value={editingEntity.data.destination || ''} 
+                        onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, destination: e.target.value } }))}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="grid-2-col">
+                    <div className="form-group">
+                      <label className="form-label">Current Location *</label>
+                      <input 
+                        type="text" 
+                        value={editingEntity.data.current_location || ''} 
+                        onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, current_location: e.target.value } }))}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Transit Milestone</label>
+                      <select 
+                        value={editingEntity.data.current_status || 'booked'} 
+                        onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, current_status: e.target.value } }))}
+                        className="form-control"
+                      >
+                        <option value="booked">Booked</option>
+                        <option value="packing">Packing</option>
+                        <option value="loading">Loading</option>
+                        <option value="in_transit">In Transit</option>
+                        <option value="reached_hub">Hub Arrival</option>
+                        <option value="out_for_delivery">Out for Delivery</option>
+                        <option value="delivered">Delivered</option>
+                      </select>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* EDIT REVIEW FIELDS */}
+              {editingEntity.category === 'review' && (
+                <>
+                  <div className="form-group">
+                    <label className="form-label">Client Name *</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.name || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, name: e.target.value } }))}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Service Type Used *</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.service_type || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, service_type: e.target.value } }))}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="grid-2-col">
+                    <div className="form-group">
+                      <label className="form-label">Rating (1-5 Stars) *</label>
+                      <input 
+                        type="number" 
+                        min="1"
+                        max="5"
+                        value={editingEntity.data.rating || 5} 
+                        onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, rating: Number(e.target.value) } }))}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Approval Status</label>
+                      <select 
+                        value={editingEntity.data.is_approved ? 'true' : 'false'} 
+                        onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, is_approved: e.target.value === 'true' } }))}
+                        className="form-control"
+                      >
+                        <option value="true">Approved & Live</option>
+                        <option value="false">Pending Approval</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Review Comment *</label>
+                    <textarea 
+                      rows="3"
+                      value={editingEntity.data.comment || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, comment: e.target.value } }))}
+                      className="form-control"
+                      required
+                    ></textarea>
+                  </div>
+                </>
+              )}
+
+              {/* EDIT CONTACT INQUIRY FIELDS */}
+              {editingEntity.category === 'contact' && (
+                <>
+                  <div className="form-group">
+                    <label className="form-label">Client Name *</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.name || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, name: e.target.value } }))}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Phone Number *</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.phone || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, phone: e.target.value } }))}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Email Address</label>
+                    <input 
+                      type="email" 
+                      value={editingEntity.data.email || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, email: e.target.value } }))}
+                      className="form-control"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Subject *</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.subject || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, subject: e.target.value } }))}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Message *</label>
+                    <textarea 
+                      rows="3"
+                      value={editingEntity.data.message || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, message: e.target.value } }))}
+                      className="form-control"
+                      required
+                    ></textarea>
+                  </div>
+                </>
+              )}
+
+              {/* EDIT VEHICLE FIELDS */}
+              {editingEntity.category === 'vehicle' && (
+                <>
+                  <div className="form-group">
+                    <label className="form-label">Registration Plate Number *</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.plate || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, plate: e.target.value } }))}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Vehicle Type *</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.type || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, type: e.target.value } }))}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Assigned Driver</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.driver || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, driver: e.target.value } }))}
+                      className="form-control"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Current Route / Station</label>
+                    <input 
+                      type="text" 
+                      value={editingEntity.data.currentRoute || ''} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, currentRoute: e.target.value } }))}
+                      className="form-control"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Operational Status</label>
+                    <select 
+                      value={editingEntity.data.status || 'available'} 
+                      onChange={(e) => setEditingEntity(prev => ({ ...prev, data: { ...prev.data, status: e.target.value } }))}
+                      className="form-control"
+                    >
+                      <option value="available">Available</option>
+                      <option value="in_transit">In Transit</option>
+                      <option value="maintenance">Maintenance</option>
+                    </select>
+                  </div>
+                </>
+              )}
+
+            </div>
+
+            <div className="form-actions" style={{ borderTop: '1px dashed #cbd5e1', paddingTop: '16px' }}>
+              <button 
+                type="button" 
+                onClick={() => setEditingEntity(null)} 
+                className="btn btn-outline"
+              >
+                Cancel
+              </button>
+              <button type="submit" className="btn btn-secondary" style={{ backgroundColor: '#ea580c', borderColor: '#ea580c' }} disabled={updating}>
+                {updating ? 'Saving...' : 'Save Changes'}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* 2. Add Vehicle Modal Overlay */}
+      {showAddVehicleModal && (
+        <div className="admin-modal-overlay" style={{ zIndex: 10000 }}>
+          <form onSubmit={handleCreateVehicle} className="admin-status-modal card glass animate-fade" style={{ maxWidth: '500px' }}>
+            <h3>Register New Shifting Vehicle</h3>
+            <p>Add cargo container trucks to the active local transport fleet.</p>
+            
+            <div className="form-group">
+              <label className="form-label">Registration Plate Number *</label>
+              <input 
+                type="text" 
+                placeholder="e.g. GJ-06-ZZ-1234"
+                value={newVehicleForm.plate}
+                onChange={(e) => setNewVehicleForm(prev => ({ ...prev, plate: e.target.value.toUpperCase() }))}
+                className="form-control"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Vehicle Type *</label>
+              <input 
+                type="text" 
+                placeholder="e.g. Tata 407 (14-ft container)"
+                value={newVehicleForm.type}
+                onChange={(e) => setNewVehicleForm(prev => ({ ...prev, type: e.target.value }))}
+                className="form-control"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Assigned Driver</label>
+              <input 
+                type="text" 
+                placeholder="e.g. Sukhdev Singh"
+                value={newVehicleForm.driver}
+                onChange={(e) => setNewVehicleForm(prev => ({ ...prev, driver: e.target.value }))}
+                className="form-control"
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Current Route / Station</label>
+              <input 
+                type="text" 
+                placeholder="e.g. Gotri Vadodara Hub"
+                value={newVehicleForm.currentRoute}
+                onChange={(e) => setNewVehicleForm(prev => ({ ...prev, currentRoute: e.target.value }))}
+                className="form-control"
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Operational Status</label>
+              <select 
+                value={newVehicleForm.status}
+                onChange={(e) => setNewVehicleForm(prev => ({ ...prev, status: e.target.value }))}
+                className="form-control"
+              >
+                <option value="available">Available (Standby)</option>
+                <option value="in_transit">In Transit (Active)</option>
+                <option value="maintenance">Maintenance</option>
+              </select>
+            </div>
+
+            <div className="form-actions">
+              <button 
+                type="button" 
+                onClick={() => setShowAddVehicleModal(false)} 
+                className="btn btn-outline"
+              >
+                Cancel
+              </button>
+              <button type="submit" className="btn btn-secondary" style={{ backgroundColor: '#ea580c', borderColor: '#ea580c' }}>
+                Add to Fleet
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
 
       {/* Add Admin Modal Form Overlay */}
       {showAddAdminModal && (

@@ -576,5 +576,157 @@ export const dbService = {
       localStorage.setItem('rk_gallery', JSON.stringify(filtered));
       return { id };
     }
+  },
+
+  async deleteQuote(id) {
+    if (isSupabaseConfigured()) {
+      const { data, error } = await supabase
+        .from('quotes')
+        .delete()
+        .eq('id', id)
+        .select();
+      if (error) throw error;
+      return data[0];
+    } else {
+      const quotes = JSON.parse(localStorage.getItem('rk_quotes') || '[]');
+      const filtered = quotes.filter(q => q.id !== id);
+      localStorage.setItem('rk_quotes', JSON.stringify(filtered));
+      return { id };
+    }
+  },
+
+  async updateQuote(id, quoteData) {
+    if (isSupabaseConfigured()) {
+      const { data, error } = await supabase
+        .from('quotes')
+        .update(quoteData)
+        .eq('id', id)
+        .select();
+      if (error) throw error;
+      return data[0];
+    } else {
+      const quotes = JSON.parse(localStorage.getItem('rk_quotes') || '[]');
+      const index = quotes.findIndex(q => q.id === id);
+      if (index !== -1) {
+        quotes[index] = { ...quotes[index], ...quoteData };
+        localStorage.setItem('rk_quotes', JSON.stringify(quotes));
+        return quotes[index];
+      }
+      throw new Error('Quote not found');
+    }
+  },
+
+  async deleteShipment(id) {
+    if (isSupabaseConfigured()) {
+      const { data, error } = await supabase
+        .from('shipments')
+        .delete()
+        .eq('id', id)
+        .select();
+      if (error) throw error;
+      return data[0];
+    } else {
+      const shipments = JSON.parse(localStorage.getItem('rk_shipments') || '[]');
+      const filtered = shipments.filter(s => s.id !== id);
+      localStorage.setItem('rk_shipments', JSON.stringify(filtered));
+      return { id };
+    }
+  },
+
+  async updateShipmentDetails(id, shipmentData) {
+    if (isSupabaseConfigured()) {
+      const { data, error } = await supabase
+        .from('shipments')
+        .update(shipmentData)
+        .eq('id', id)
+        .select();
+      if (error) throw error;
+      return data[0];
+    } else {
+      const shipments = JSON.parse(localStorage.getItem('rk_shipments') || '[]');
+      const index = shipments.findIndex(s => s.id === id);
+      if (index !== -1) {
+        shipments[index] = { ...shipments[index], ...shipmentData };
+        localStorage.setItem('rk_shipments', JSON.stringify(shipments));
+        return shipments[index];
+      }
+      throw new Error('Shipment not found');
+    }
+  },
+
+  async deleteReview(id) {
+    if (isSupabaseConfigured()) {
+      const { data, error } = await supabase
+        .from('reviews')
+        .delete()
+        .eq('id', id)
+        .select();
+      if (error) throw error;
+      return data[0];
+    } else {
+      const reviews = JSON.parse(localStorage.getItem('rk_reviews') || '[]');
+      const filtered = reviews.filter(r => r.id !== id);
+      localStorage.setItem('rk_reviews', JSON.stringify(filtered));
+      return { id };
+    }
+  },
+
+  async updateReviewDetails(id, reviewData) {
+    if (isSupabaseConfigured()) {
+      const { data, error } = await supabase
+        .from('reviews')
+        .update(reviewData)
+        .eq('id', id)
+        .select();
+      if (error) throw error;
+      return data[0];
+    } else {
+      const reviews = JSON.parse(localStorage.getItem('rk_reviews') || '[]');
+      const index = reviews.findIndex(r => r.id === id);
+      if (index !== -1) {
+        reviews[index] = { ...reviews[index], ...reviewData };
+        localStorage.setItem('rk_reviews', JSON.stringify(reviews));
+        return reviews[index];
+      }
+      throw new Error('Review not found');
+    }
+  },
+
+  async deleteContact(id) {
+    if (isSupabaseConfigured()) {
+      const { data, error } = await supabase
+        .from('contacts')
+        .delete()
+        .eq('id', id)
+        .select();
+      if (error) throw error;
+      return data[0];
+    } else {
+      const contacts = JSON.parse(localStorage.getItem('rk_contacts') || '[]');
+      const filtered = contacts.filter(c => c.id !== id);
+      localStorage.setItem('rk_contacts', JSON.stringify(filtered));
+      return { id };
+    }
+  },
+
+  async updateContactDetails(id, contactData) {
+    if (isSupabaseConfigured()) {
+      const { data, error } = await supabase
+        .from('contacts')
+        .update(contactData)
+        .eq('id', id)
+        .select();
+      if (error) throw error;
+      return data[0];
+    } else {
+      const contacts = JSON.parse(localStorage.getItem('rk_contacts') || '[]');
+      const index = contacts.findIndex(c => c.id === id);
+      if (index !== -1) {
+        contacts[index] = { ...contacts[index], ...contactData };
+        localStorage.setItem('rk_contacts', JSON.stringify(contacts));
+        return contacts[index];
+      }
+      throw new Error('Contact not found');
+    }
   }
 };
